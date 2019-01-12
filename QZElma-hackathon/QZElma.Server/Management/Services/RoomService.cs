@@ -1,4 +1,5 @@
-﻿using QZElma.Server.Management.DBRepositories.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
+using QZElma.Server.Management.DBRepositories.Interfaces;
 using QZElma.Server.Management.EventPublishers.Interfaces;
 using QZElma.Server.Management.Services.Interfaces;
 using QZElma.Server.Models.Attributes;
@@ -21,6 +22,7 @@ namespace QZElma.Server.Management.Services
         IRoomService
     {
         protected readonly IDBRepository<Room> _roomRepository;
+        private readonly IConfiguration configuration;
         protected readonly IDBRepository<Quiz> _quizRepository;
         protected readonly IDBRepository<MultipleChoiceQuestion> _questionRepository;
         protected readonly IDBRepository<User> _userRepository;
@@ -32,6 +34,7 @@ namespace QZElma.Server.Management.Services
         /// </summary>
         public RoomService(
             IDBRepository<Room> roomRepository,
+            IConfiguration configuration,
             IDBRepository<Quiz> quizRepository,
             IDBRepository<MultipleChoiceQuestion> questionRepository,
             IDBRepository<User> userRepository,
@@ -39,6 +42,7 @@ namespace QZElma.Server.Management.Services
             IEventPublisher eventPublisher)
         {
             _roomRepository = roomRepository;
+            this.configuration = configuration;
             _quizRepository = quizRepository;
             _questionRepository = questionRepository;
             _userRepository = userRepository;
@@ -83,7 +87,9 @@ namespace QZElma.Server.Management.Services
 
             //TODO проверка на принадлежность только одной комнате??
 
-            var roomUserIds = _roomRepository.Get<DMRoomUserIds>(@event.RoomId);
+            var roomId = configuration.GetSection("DefaultRoomId").Value;
+
+            var roomUserIds = _roomRepository.Get<DMRoomUserIds>(Guid.Parse(roomId));
             roomUserIds.UserIds.Add(userId);
 
             _roomRepository.Update(roomUserIds);
@@ -113,7 +119,7 @@ namespace QZElma.Server.Management.Services
 
             // проверка на существование ответа
             var userAnswer = _userAnswerRepository.GetList<DMUserAnswer>(x => x.AnswerOptionId == @event.AnswerOptionId);
-            if (userAnswer.Count() == 0)
+            if (userAnswer.Count() != 0)
             {
                 return;
             }
@@ -153,8 +159,8 @@ namespace QZElma.Server.Management.Services
                     {
                         _eventPublisher.Publish(new EventSendNextQuestion()
                         {
-                            userChatIds = room.Users.Select(x => x.ChatId),
-                            question = question
+                            UserChatIds = room.Users.Select(x => x.ChatId),
+                            Question = question
                         });
                         return;
                     }

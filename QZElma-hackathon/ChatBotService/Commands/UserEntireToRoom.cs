@@ -19,7 +19,7 @@ namespace ChatBotService.Commands
 
         public override string Name => "entry";
 
-        public override void Execute(Message message, TelegramBotClient client)
+        public async override void Execute(Message message, TelegramBotClient client)
         {
             var chatId = message.Chat.Id;
 
@@ -29,6 +29,8 @@ namespace ChatBotService.Commands
             };
 
             publisher.Publish(entryEvent);
+
+            await client.SendTextMessageAsync(chatId, "Вы зашли в комнату, ожидайте начала игры");
         }
     }
 }

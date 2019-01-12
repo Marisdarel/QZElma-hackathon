@@ -16,7 +16,7 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities
     /// </summary>
     public class DMRoomQuiz :
         BaseDMEntity<DMRoomQuiz, Room>,
-        IDMRoom
+        IDMRoomQuiz
     {
         /// <summary>
         /// Идентификатор

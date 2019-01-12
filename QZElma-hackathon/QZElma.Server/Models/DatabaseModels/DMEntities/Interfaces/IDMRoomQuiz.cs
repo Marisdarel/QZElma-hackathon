@@ -8,7 +8,7 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities.Interfaces
     /// </summary>
     public interface IDMRoomQuiz :
         IDMIdEntity,
-        IDMSelectable<DMRoomQuiz, Room>
+        IDMSelectable<DMRoomQuiz, Room>,
         IDMUpdatable<Room>
     {
         /// <summary>

@@ -19,6 +19,8 @@ namespace QZElma.Web.AutoMapper
                     .ForMember(en => en.Users, options => options.MapFrom(dm =>
                         Mapper.Map<IEnumerable<DMUser>, IEnumerable<User>>(dm.Users)));
 
+                cfg.CreateMap<DMRoomUserIds, Room>();
+
                 cfg.CreateMap<DMQuiz, Quiz>()
                     .ForMember(en => en.Questions, options => options.MapFrom(dm =>
                         Mapper.Map<IEnumerable<DMMultipleChoiceQuestion>, IEnumerable<MultipleChoiceQuestion>>(dm.Questions)));

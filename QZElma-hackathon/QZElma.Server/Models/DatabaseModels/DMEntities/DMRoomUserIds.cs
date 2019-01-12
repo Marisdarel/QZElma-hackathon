@@ -46,7 +46,7 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities
             en => new DMRoomUserIds
             {
                 Id = en.Id,
-                UserIds = en.Quiz == null ? new List<Guid>() : en.Users.Select(us => us.Id).ToList()
+                UserIds = en.Users.Select(us => us.Id).ToList()
             };
 
         /// <summary>
@@ -70,25 +70,28 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities
                 return;
             }
 
-            var userIdsToBeAdded = UserIds;
-            if (entity.Users != null)
+            if (entity.Users == null)
             {
-                var usersToBeDeleted = entity.Users
-                    .Where(us => UserIds.All(usId => usId != us.Id)).ToList();
-
-                foreach (var user in usersToBeDeleted)
-                {
-                    entity.Users.Remove(user);
-                }
-
-                userIdsToBeAdded = UserIds
-                    .Where(usId => entity.Users.All(us => us.Id != usId)).ToList();
+                entity.Users = new List<User>();
             }
+
+            var userIdsToBeAdded = UserIds;
+            var usersToBeDeleted = entity.Users
+                .Where(us => UserIds.All(usId => usId != us.Id)).ToList();
+
+            foreach (var user in usersToBeDeleted)
+            {
+                entity.Users.Remove(user);
+            }
+
+            userIdsToBeAdded = UserIds
+                .Where(usId => entity.Users.All(us => us.Id != usId)).ToList();
 
             foreach (var userId in userIdsToBeAdded)
             {
                 entity.Users.Add(db.Set<User>().Find(userId));
             }
+
         }
 
         /// <summary>

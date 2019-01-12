@@ -18,7 +18,7 @@ namespace QZElma.Web
         private readonly ILogger<ChatBotListener> logger;
         private readonly IEventPublisher publisher;
         private Timer _timer;
-        private int offset = 911858348;
+        private int offset = 911858378;
         
 
         public ChatBotListener(ChatBot bot, ILogger<ChatBotListener> logger, IEventPublisher publisher)
@@ -65,6 +65,9 @@ namespace QZElma.Web
                                 UserChatId = callback.From.Id,
                                 AnswerOptionId = new Guid(callback.Data)
                             };
+                            publisher.Publish(answerEvent);
+
+                            await client.SendTextMessageAsync(callback.From.Id, String.Format("Ответ {0} сохранен", callback.Message.Text));
                         }
                     }
 
