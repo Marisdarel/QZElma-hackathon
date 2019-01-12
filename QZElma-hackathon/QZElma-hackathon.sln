@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QZElma.Web", "QZElma.Web\QZ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QZElma.Server", "QZElma.Server\QZElma.Server.csproj", "{8E9720B5-7055-4197-99B6-90161B9B8AA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatBotService", "ChatBotService\ChatBotService.csproj", "{F3BD4F2F-4E81-4580-93B5-36FDDC0656B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatBotService", "ChatBotService\ChatBotService.csproj", "{72EB0DA4-6940-4BB6-8C00-68C6A0043394}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{8E9720B5-7055-4197-99B6-90161B9B8AA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E9720B5-7055-4197-99B6-90161B9B8AA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E9720B5-7055-4197-99B6-90161B9B8AA6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3BD4F2F-4E81-4580-93B5-36FDDC0656B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3BD4F2F-4E81-4580-93B5-36FDDC0656B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3BD4F2F-4E81-4580-93B5-36FDDC0656B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3BD4F2F-4E81-4580-93B5-36FDDC0656B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72EB0DA4-6940-4BB6-8C00-68C6A0043394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72EB0DA4-6940-4BB6-8C00-68C6A0043394}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72EB0DA4-6940-4BB6-8C00-68C6A0043394}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72EB0DA4-6940-4BB6-8C00-68C6A0043394}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
