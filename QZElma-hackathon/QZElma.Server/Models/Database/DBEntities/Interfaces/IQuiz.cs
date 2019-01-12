@@ -17,6 +17,6 @@ namespace QZElma.Server.Models.Database.DBEntities.Interfaces
         /// <summary>
         /// Вопросы
         /// </summary>
-        ICollection<MultipleChoiceQuestion> Questions { get; set; }
+        IEnumerable<MultipleChoiceQuestion> Questions { get; set; }
     }
 }

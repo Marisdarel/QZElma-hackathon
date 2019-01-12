@@ -1,13 +1,18 @@
-﻿using System;
+﻿using QZElma.Server.Models.Database.DBEntities;
+using System;
 using System.Collections.Generic;
 
-namespace QZElma.Server.Models.Database.DBEntities.Interfaces
+
+namespace QZElma.Server.Models.DatabaseModels.DMEntities.Interfaces
 {
     /// <summary>
     /// Вопрос с несколькими вариантами ответа
     /// </summary>
-    public interface IMultipleChoiceQuestion :
-        IDBIdEntity
+    public interface IDMMultipleChoiceQuestion :
+        IDMIdEntity,
+        IDMSelectable<DMMultipleChoiceQuestion, MultipleChoiceQuestion>,
+        IDMCreatable<MultipleChoiceQuestion>,
+        IDMUpdatable<MultipleChoiceQuestion>
     {
         /// <summary>
         /// Текст вопроса
@@ -17,7 +22,7 @@ namespace QZElma.Server.Models.Database.DBEntities.Interfaces
         /// <summary>
         /// Варианты ответа
         /// </summary>
-        IEnumerable<AnswerOption> Options { get; set; }
+        IEnumerable<DMAnswerOption> Options { get; set; }
 
         /// <summary>
         /// Правильный вариант ответа

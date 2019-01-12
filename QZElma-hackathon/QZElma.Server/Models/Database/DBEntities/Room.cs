@@ -28,6 +28,6 @@ namespace QZElma.Server.Models.Database.DBEntities
         /// <summary>
         /// Пользователи
         /// </summary>
-        public ICollection<User> Users { get; set; }
+        public IEnumerable<User> Users { get; set; }
     }
 }

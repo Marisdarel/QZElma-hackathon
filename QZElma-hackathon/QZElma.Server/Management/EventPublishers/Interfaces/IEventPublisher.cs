@@ -18,6 +18,6 @@ namespace QZElma.Server.Management.EventPublishers.Interfaces
         /// </summary>
         /// <param name="someEvents">События</param>
         /// <returns></returns>
-        void Publish(ICollection<IEvent> someEvents);
+        void Publish(IEnumerable<IEvent> someEvents);
     }
 }

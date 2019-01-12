@@ -24,7 +24,7 @@ namespace QZElma.Server.Models.Database.DBEntities
         /// <summary>
         /// Варианты ответа
         /// </summary>
-        public ICollection<AnswerOption> Options { get; set; }
+        public IEnumerable<AnswerOption> Options { get; set; }
 
         /// <summary>
         /// Правильный вариант ответа

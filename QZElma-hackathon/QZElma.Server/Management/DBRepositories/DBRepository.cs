@@ -144,7 +144,7 @@ namespace QZElma.Server.Management.DBRepositories
         /// <param name="from">Смещение от первого найденного результата</param>
         /// <param name="size">Количество выдаваемых результатов</param>
         /// <returns></returns>
-        public ICollection<TDM> GetAll<TDM>(int from, int size)
+        public IEnumerable<TDM> GetAll<TDM>(int from, int size)
             where TDM : IDMSelectable<TDM, TDB>, new()
         {
             var dmEntity = new TDM();
@@ -164,7 +164,7 @@ namespace QZElma.Server.Management.DBRepositories
         /// <param name="from">Смещение от первого найденного результата</param>
         /// <param name="size">Количество выдаваемых результатов</param>
         /// <returns></returns>
-        public ICollection<TDM> GetList<TDM>(Func<TDM, bool> predicate, int from = 0, int size = -1)
+        public IEnumerable<TDM> GetList<TDM>(Func<TDM, bool> predicate, int from = 0, int size = -1)
             where TDM : IDMSelectable<TDM, TDB>, new()
         {
             var dmEntity = new TDM();

@@ -19,7 +19,7 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities.Interfaces
         /// Возвращает лямбда выражения для включения полей вложенных данных.
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Expression<Func<TDB, Object>>> GetIncludeExpressions();
+        IEnumerable<Expression<Func<TDB, object>>> GetIncludeExpressions();
 
         /// <summary>
         /// Дополнительные изменения в БД до обновления данных сущности в БД.
