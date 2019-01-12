@@ -63,7 +63,7 @@ namespace QZElma.Web
                         {
                             var answerEvent = new EventUserAnsweredQuestion() {
                                 UserChatId = callback.From.Id,
-                                AnswerId = callback.Data
+                                AnswerOptionId = new Guid(callback.Data)
                             };
                         }
                     }
