@@ -22,6 +22,6 @@ namespace QZElma.Server.Models.Database.DBEntities.Interfaces
         /// <summary>
         /// Пользователи
         /// </summary>
-        IEnumerable<User> Users { get; set; }
+        ICollection<User> Users { get; set; }
     }
 }

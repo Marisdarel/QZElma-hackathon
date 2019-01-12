@@ -16,6 +16,11 @@ namespace QZElma.Server.Models.Database.EventModels.Events
         public long UserChatId { get; set; }
 
         /// <summary>
+        /// Имя пользователя в чате
+        /// </summary>
+        public string UserName { get; set; }
+
+        /// <summary>
         /// Идентификатор комнаты
         /// </summary>
         public Guid RoomId { get; set; }
