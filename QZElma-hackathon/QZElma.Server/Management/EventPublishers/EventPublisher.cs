@@ -7,12 +7,19 @@ using System.Collections.Generic;
 
 namespace QZElma.Server.Management.EventPublishers
 {
+    /// <summary>
+    /// Интерфейс для публикаторов сообщений
+    /// </summary>
     [HelperService]
     class EventPublisher : IEventPublisher
     {
         private readonly ICapPublisher _capPublisher;
 
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="capPublisher"></param>
         public EventPublisher(ICapPublisher capPublisher)
         {
             _capPublisher = capPublisher;

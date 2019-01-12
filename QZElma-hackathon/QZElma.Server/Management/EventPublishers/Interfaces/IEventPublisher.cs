@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace QZElma.Server.Management.EventPublishers.Interfaces
 {
+    /// <summary>
+    /// Интерфейс для публикаторов сообщений
+    /// </summary>
     public interface IEventPublisher
     {
         /// <summary>

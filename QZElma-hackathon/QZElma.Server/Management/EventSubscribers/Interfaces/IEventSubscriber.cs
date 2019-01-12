@@ -3,7 +3,10 @@
 
 namespace QZElma.Server.Management.EventSubscribers.Interfaces
 {
-    interface IEventSubscriber : ICapSubscribe
+    /// <summary>
+    /// Интерфейс для подписчиков на сообщения
+    /// </summary>
+    public interface IEventSubscriber : ICapSubscribe
     {
     }
 }
