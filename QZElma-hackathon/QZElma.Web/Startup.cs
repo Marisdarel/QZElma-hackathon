@@ -58,7 +58,7 @@ namespace QZElma.Web
                 .AddClasses(classes => classes.WithAttribute<SelfHelperService>())
                    .AsSelf()
                    .WithTransientLifetime()
-                .AddClasses(classes => classes.WithAttribute<Server.Models.Attributes.ChatBotService>())
+                .AddClasses(classes => classes.WithAttribute<Server.Models.Attributes.ChatBotServiceAtt>())
                    .AsSelf()
                    .WithSingletonLifetime()
                 .AddClasses(classes => classes.WithAttribute<SingletonService>())

@@ -2,7 +2,7 @@
 
 namespace QZElma.Server.Models.Attributes
 {
-    public class ChatBotService : Attribute
+    public class ChatBotServiceAtt : Attribute
     {
     }
 }
