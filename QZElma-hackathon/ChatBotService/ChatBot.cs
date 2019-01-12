@@ -12,6 +12,7 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 using LinqKit;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace ChatBotService
 {
@@ -45,27 +46,59 @@ namespace ChatBotService
             };
         }
 
-        public void Question(int roomId, DMMultipleChoiceQuestion question)
+        public async void Question(int roomId, DMMultipleChoiceQuestion question)
         {
+            var right = Guid.NewGuid();
+            question = new DMMultipleChoiceQuestion()
+            {
+                Id = Guid.Empty,
+                Options = new List<DMAnswerOption>()
+                {
+                    new DMAnswerOption()
+                    {
+                        Id = right,
+                        Text = "1"
+                    },
+                     new DMAnswerOption()
+                    {
+                        Id = Guid.NewGuid(),
+                        Text = "2"
+                    },
+                      new DMAnswerOption()
+                    {
+                        Id = Guid.NewGuid(),
+                        Text = "М3"
+                    },
+                       new DMAnswerOption()
+                    {
+                        Id = Guid.NewGuid(),
+                        Text = "4"
+                    },
+                },
+                RightAnswerId = right,
+                Text = "LOLKEK"
+            };
+
             var keyboard = new ReplyKeyboardMarkup();
 
-            var rkm = new ReplyKeyboardMarkup();
-            var rows = new List<KeyboardButton[]>();
-            var cols = new List<KeyboardButton>();
+            
+            var rows = new List<InlineKeyboardButton[]>();
+            var cols = new List<InlineKeyboardButton>();
+
             for (var i = 0; i < question.Options.Count(); i++)
             {
-                cols.Add(new KeyboardButton(question.Options.ElementAt(i).Text));
+                cols.Add(InlineKeyboardButton.WithCallbackData(question.Options.ElementAt(i).Text, question.Options.ElementAt(i).Id.ToString()));
                 if (i % 2 != 0) continue;
                 rows.Add(cols.ToArray());
-                cols = new List<KeyboardButton>();
+                cols = new List<InlineKeyboardButton>();
             }
 
-            rkm.Keyboard = rows.ToArray();
+            var rkm = new InlineKeyboardMarkup(rows.ToArray());
 
-            //await client.SendTextMessageAsync(
-            //    message.Chat.Id,
-            //    "Choose",
-            //    replyMarkup: rkm);
+            await client.SendTextMessageAsync(
+                459352140,
+                question.Text,
+                replyMarkup: rkm);
         }
 
         public async Task<TelegramBotClient> Get()

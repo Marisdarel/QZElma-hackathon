@@ -18,6 +18,6 @@ namespace QZElma.Server.Models.Database.EventModels.Events
         /// <summary>
         /// Идентификатор ответа
         /// </summary>
-        public string AnswerText { get; set; }
+        public string AnswerId { get; set; }
     }
 }

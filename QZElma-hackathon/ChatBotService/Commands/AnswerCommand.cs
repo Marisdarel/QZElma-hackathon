@@ -24,8 +24,9 @@ namespace ChatBotService.Commands
             var ansEvent = new EventUserAnsweredQuestion()
             {
                 UserChatId = message.Chat.Id,
-                AnswerText = message.Text
+                AnswerId = message.Text
             };
+
             publish.Publish(ansEvent);
         }
     }

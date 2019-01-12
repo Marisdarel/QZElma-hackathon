@@ -1,6 +1,8 @@
 ﻿using ChatBotService;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using QZElma.Server.Management.EventPublishers.Interfaces;
+using QZElma.Server.Models.Database.EventModels.Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,13 +16,15 @@ namespace QZElma.Web
     {
         private readonly ChatBot bot;
         private readonly ILogger<ChatBotListener> logger;
+        private readonly IEventPublisher publisher;
         private Timer _timer;
-        private int offset = 911858334;
+        private int offset = 911858348;
         
 
-        public ChatBotListener(ChatBot bot, ILogger<ChatBotListener> logger)
+        public ChatBotListener(ChatBot bot, ILogger<ChatBotListener> logger, IEventPublisher publisher)
         {
             this.logger = logger;
+            this.publisher = publisher;
             this.bot = bot;
         }
 
@@ -40,16 +44,28 @@ namespace QZElma.Web
                 {
                     var commands = bot.GetCommandList();
                     var message = update.Message;
+                    var callback = update.CallbackQuery;
 
-                    if (message == null)
-                        continue;
-
-                    var command = commands.FirstOrDefault(x => x.Contains(message.Text));
-
-                    if (command != null)
+                    if (message != null)
                     {
-                        command.Execute(message, client);
-                        logger.LogInformation("Execute command {0}", update.Message.Text);
+                        var command = commands.FirstOrDefault(x => x.Contains(message.Text));
+
+                        if (command != null)
+                        {
+                            command.Execute(message, client);
+                            logger.LogInformation("Execute command {0}", update.Message.Text);
+                        }
+                    }
+                    else if(callback != null)
+                    {
+                        var command = commands.Where(x => x.Name == "Answer").FirstOrDefault();
+                        if (command != null)
+                        {
+                            var answerEvent = new EventUserAnsweredQuestion() {
+                                UserChatId = callback.From.Id,
+                                AnswerId = callback.Data
+                            };
+                        }
                     }
 
                     offset = update.Id + 1;

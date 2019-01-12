@@ -38,5 +38,12 @@ namespace QZElma.Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult Test()
+        {
+            chatBot.Question(0, null);
+
+            return Ok();
+        }
     }
 }
