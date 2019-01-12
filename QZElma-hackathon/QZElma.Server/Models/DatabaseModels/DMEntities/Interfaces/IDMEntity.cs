@@ -1,4 +1,4 @@
-﻿namespace QZElma.Server.Models.DatabaseModels.Interfaces
+﻿namespace QZElma.Server.Models.DatabaseModels.DMEntities.Interfaces
 {
     /// <summary>
     /// Начальный интерфейс DM сущностей

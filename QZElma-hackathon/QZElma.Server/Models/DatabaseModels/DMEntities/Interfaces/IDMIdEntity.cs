@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace QZElma.Server.Models.DatabaseModels.Interfaces
+namespace QZElma.Server.Models.DatabaseModels.DMEntities.Interfaces
 {
     /// <summary>
     /// Интерфейс сущностей БД с идентификаторами

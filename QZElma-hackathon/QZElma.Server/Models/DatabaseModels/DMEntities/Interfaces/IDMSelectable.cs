@@ -3,7 +3,7 @@ using System;
 using System.Linq.Expressions;
 
 
-namespace QZElma.Server.Models.DatabaseModels.Interfaces
+namespace QZElma.Server.Models.DatabaseModels.DMEntities.Interfaces
 {
     /// <summary>
     /// Интерфейс позволяющий получать сущность

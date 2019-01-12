@@ -1,6 +1,6 @@
 ﻿using LinqKit;
 using QZElma.Server.Models.Database.DBEntities.Interfaces;
-using QZElma.Server.Models.DatabaseModels.Interfaces;
+using QZElma.Server.Models.DatabaseModels.DMEntities.Interfaces;
 using System;
 using System.Linq.Expressions;
 

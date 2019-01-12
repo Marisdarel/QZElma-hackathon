@@ -2,7 +2,7 @@
 using QZElma.Server.Models.Database.DBEntities.Interfaces;
 
 
-namespace QZElma.Server.Models.DatabaseModels.Interfaces
+namespace QZElma.Server.Models.DatabaseModels.DMEntities.Interfaces
 {
     /// <summary>
     /// Интерфейс позволяющий создавать сущность

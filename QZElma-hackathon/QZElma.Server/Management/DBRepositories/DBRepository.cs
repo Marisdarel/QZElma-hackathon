@@ -7,7 +7,7 @@ using QZElma.Server.Management.DBRepositories.Interfaces;
 using QZElma.Server.Models.Attributes;
 using QZElma.Server.Models.Database.DBContexts;
 using QZElma.Server.Models.Database.DBEntities.Interfaces;
-using QZElma.Server.Models.DatabaseModels.Interfaces;
+using QZElma.Server.Models.DatabaseModels.DMEntities.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

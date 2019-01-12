@@ -1,5 +1,5 @@
 ﻿using QZElma.Server.Models.Database.DBEntities.Interfaces;
-using QZElma.Server.Models.DatabaseModels.Interfaces;
+using QZElma.Server.Models.DatabaseModels.DMEntities.Interfaces;
 using QZElma.Server.Models.Filters.DMFilters;
 using System;
 using System.Linq.Expressions;
