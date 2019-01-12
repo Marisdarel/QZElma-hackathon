@@ -15,15 +15,13 @@ namespace ChatBotService.Commands
         public UserEntireToRoom(IEventPublisher publisher)
         {
             this.publisher = publisher;
-            this.publisher = publisher;
         }
 
-        public override string Name => "Entry";
+        public override string Name => "entry";
 
         public override void Execute(Message message, TelegramBotClient client)
         {
             var chatId = message.Chat.Id;
-            var messageId = message.MessageId;
 
             var entryEvent = new EventUserEnteredRoom() {
                 UserChatId = chatId,

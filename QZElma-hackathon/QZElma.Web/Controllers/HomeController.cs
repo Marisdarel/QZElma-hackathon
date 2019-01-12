@@ -3,6 +3,7 @@ using QZElma.Server.Management.EventPublishers.Interfaces;
 using QZElma.Server.Models.Database.EventModels.Events;
 using QZElma.Web.Models;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 
@@ -25,7 +26,21 @@ namespace QZElma.Web.Controllers
             } );
             //Test>
 
-            return View();
+            var model = new List<LeaderBoardViewModel>()
+            {
+                new LeaderBoardViewModel()
+                {
+                    RightAnswerCount = 3,
+                    UserName = "Вася пупкин"
+                },
+                new LeaderBoardViewModel()
+                {
+                    RightAnswerCount = 10,
+                    UserName = "Велисовский эволенд"
+                }
+            };
+
+            return View(model);
         }
 
         public IActionResult Privacy()

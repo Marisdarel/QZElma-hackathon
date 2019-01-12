@@ -41,7 +41,9 @@ namespace QZElma.Web.Controllers
 
         public IActionResult Test()
         {
-            chatBot.Question(0, null);
+            chatBot.SendQuestion(new List<int>() {
+                459352140
+            }, null);
 
             return Ok();
         }

@@ -10,6 +10,7 @@ using Telegram.Bot;
 using Telegram.Bot.Types.ReplyMarkups;
 using Newtonsoft.Json.Linq;
 using System;
+using QZElma.Server.Management.EventPublishers.Interfaces;
 
 namespace ChatBotService
 {
@@ -25,7 +26,7 @@ namespace ChatBotService
         private TelegramBotClient client;
         private readonly List<Command> commandList;
 
-        public ChatBot(IConfiguration configuration)
+        public ChatBot(IConfiguration configuration, IEventPublisher publisher)
         {
             var botSettings = new BotSettings();
             configuration.GetSection("BotSettings").Bind(botSettings);
@@ -39,11 +40,13 @@ namespace ChatBotService
 
             this.commandList = new List<Command>()
             {
-                new HelloComand()
+                new HelloComand(),
+                new UserEntireToRoom(publisher),
+                new AnswerCommand(publisher)
             };
         }
 
-        public async void Question(int roomId, DMMultipleChoiceQuestion question)
+        public async void SendQuestion(List<int> userList, DMMultipleChoiceQuestion question)
         {
             var right = Guid.NewGuid();
             question = new DMMultipleChoiceQuestion()
@@ -92,10 +95,14 @@ namespace ChatBotService
 
             var rkm = new InlineKeyboardMarkup(rows.ToArray());
 
-            await client.SendTextMessageAsync(
-                459352140,
+            foreach(var user in userList)
+            {
+                await client.SendTextMessageAsync(
+                user,
                 question.Text,
                 replyMarkup: rkm);
+            }
+            
         }
 
         public async Task<TelegramBotClient> Get()
