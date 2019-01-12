@@ -46,7 +46,7 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities
             en => new DMRoomUserIds
             {
                 Id = en.Id,
-                UserIds = en.Quiz == null ? new List<Guid>() : en.Users.Select(us => us.Id)
+                UserIds = en.Quiz == null ? new List<Guid>() : en.Users.Select(us => us.Id).ToList()
             };
 
         /// <summary>
