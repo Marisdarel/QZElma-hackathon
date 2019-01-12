@@ -12,11 +12,11 @@ using System.Linq.Expressions;
 namespace QZElma.Server.Models.DatabaseModels.DMEntities
 {
     /// <summary>
-    /// Викторина
+    /// Викторина комнаты проведения викторины
     /// </summary>
-    public class DMQuiz :
-        BaseDMEntity<DMQuiz, Quiz>,
-        IDMQuiz
+    public class DMRoomQuiz :
+        BaseDMEntity<DMRoomQuiz, Room>,
+        IDMRoomQuiz
     {
         /// <summary>
         /// Идентификатор
@@ -24,26 +24,16 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Название
+        /// Викторина
         /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Текущий вопрос
-        /// </summary>
-        public int CurrentQuestion { get; set; }
-
-        /// <summary>
-        /// Вопросы
-        /// </summary>
-        public IEnumerable<DMMultipleChoiceQuestion> Questions { get; set; }
+        public DMQuiz Quiz { get; set; }
 
 
         /// <summary>
         /// Возвращает выражение для преобразования сущностей БД в DM сущности
         /// </summary>
         /// <returns></returns>
-        public override Expression<Func<Quiz, DMQuiz>> GetSelectExpression()
+        public override Expression<Func<Room, DMRoomQuiz>> GetSelectExpression()
         {
             return SelectExpression;
         }
@@ -52,13 +42,11 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities
         /// Выражение для преобразования сущностей БД в DM сущности
         /// </summary>
         /// <returns></returns>
-        public static Expression<Func<Quiz, DMQuiz>> SelectExpression =
-            en => new DMQuiz
+        public static Expression<Func<Room, DMRoomQuiz>> SelectExpression =
+            en => new DMRoomQuiz
             {
                 Id = en.Id,
-                Name = en.Name,
-                CurrentQuestion = en.CurrentQuestion,
-                Questions = en.Questions.Select(qs => DMMultipleChoiceQuestion.SelectExpression.Invoke(qs))
+                Quiz = DMQuiz.SelectExpression.Invoke(en.Quiz)
             };
 
         /// <summary>
@@ -66,7 +54,7 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities
         /// </summary>
         /// <param name="db">контекст БД</param>
         /// <param name="entity">создаваемая в БД сущность</param>
-        public void AdditionalCreate(ApplicationDBContext db, Quiz entity)
+        public void AdditionalCreate(ApplicationDBContext db, Room entity)
         {
         }
 
@@ -75,7 +63,7 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities
         /// </summary>
         /// <param name="db">контекст БД</param>
         /// <param name="entity">обновляемая в БД сущность</param>
-        public void BeforeUpdate(ApplicationDBContext db, Quiz entity)
+        public void BeforeUpdate(ApplicationDBContext db, Room entity)
         {
         }
 
@@ -84,7 +72,7 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities
         /// </summary>
         /// <param name="db">контекст БД</param>
         /// <param name="entity">обновляемая в БД сущность</param>
-        public void AfterUpdate(ApplicationDBContext db, Quiz entity)
+        public void AfterUpdate(ApplicationDBContext db, Room entity)
         {
         }
 
@@ -92,9 +80,9 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities
         /// Возвращает лямбда выражения для включения полей вложенных данных
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Expression<Func<Quiz, object>>> GetIncludeExpressions()
+        public IEnumerable<Expression<Func<Room, object>>> GetIncludeExpressions()
         {
-            return new List<Expression<Func<Quiz, object>>>();
+            return new List<Expression<Func<Room, object>>>();
         }
     }
 }

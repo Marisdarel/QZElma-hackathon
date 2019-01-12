@@ -11,11 +11,15 @@ using Telegram.Bot.Types.ReplyMarkups;
 using Newtonsoft.Json.Linq;
 using System;
 using QZElma.Server.Management.EventPublishers.Interfaces;
+using QZElma.Server.Models.Database.EventModels.Events;
+using QZElma.Server.Models.Attributes;
+using QZElma.Server.Management.EventSubscribers.Interfaces;
 
 namespace ChatBotService
 {
-    [QZElma.Server.Models.Attributes.ChatBotService]
-    public class ChatBot
+    [QZElma.Server.Models.Attributes.ChatBotServiceAtt]
+    public class ChatBot :
+        IEventSubscriber
     {
         private readonly string token;
         private readonly string hookUrl;
@@ -46,16 +50,17 @@ namespace ChatBotService
             };
         }
 
-        public async void SendQuestion(List<int> userList, DMMultipleChoiceQuestion question)
+        [EventSubscribtion(typeof(EventSendNextQuestion))]
+        public async void SendQuestion(EventSendNextQuestion @event)
         {
             var keyboard = new ReplyKeyboardMarkup();
 
             var rows = new List<InlineKeyboardButton[]>();
             var cols = new List<InlineKeyboardButton>();
 
-            for (var i = 0; i < question.Options.Count(); i++)
+            for (var i = 0; i < @event.Question.Options.Count(); i++)
             {
-                cols.Add(InlineKeyboardButton.WithCallbackData(question.Options.ElementAt(i).Text, question.Options.ElementAt(i).Id.ToString()));
+                cols.Add(InlineKeyboardButton.WithCallbackData(@event.Question.Options.ElementAt(i).Text, @event.Question.Options.ElementAt(i).Id.ToString()));
                 if (i % 2 != 0) continue;
                 rows.Add(cols.ToArray());
                 cols = new List<InlineKeyboardButton>();
@@ -63,11 +68,11 @@ namespace ChatBotService
 
             var rkm = new InlineKeyboardMarkup(rows.ToArray());
 
-            foreach(var user in userList)
+            foreach(var user in @event.UserChatIds)
             {
                 await client.SendTextMessageAsync(
                 user,
-                question.Text,
+                @event.Question.Text,
                 replyMarkup: rkm);
             }
             

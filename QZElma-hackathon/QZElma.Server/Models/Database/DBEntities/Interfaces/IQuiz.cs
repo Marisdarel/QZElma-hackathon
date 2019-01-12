@@ -15,6 +15,11 @@ namespace QZElma.Server.Models.Database.DBEntities.Interfaces
         string Name { get; set; }
 
         /// <summary>
+        /// Текущий вопрос
+        /// </summary>
+        int CurrentQuestion { get; set; }
+
+        /// <summary>
         /// Вопросы
         /// </summary>
         ICollection<MultipleChoiceQuestion> Questions { get; set; }

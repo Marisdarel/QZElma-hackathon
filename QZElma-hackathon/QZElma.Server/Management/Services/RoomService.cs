@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using QZElma.Server.Management.DBRepositories.Interfaces;
+using QZElma.Server.Management.EventPublishers.Interfaces;
 using QZElma.Server.Management.Services.Interfaces;
 using QZElma.Server.Models.Attributes;
 using QZElma.Server.Models.Database.DBEntities;
@@ -8,6 +9,8 @@ using QZElma.Server.Models.DatabaseModels.DMEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+
 
 namespace QZElma.Server.Management.Services
 {
@@ -24,6 +27,7 @@ namespace QZElma.Server.Management.Services
         protected readonly IDBRepository<MultipleChoiceQuestion> _questionRepository;
         protected readonly IDBRepository<User> _userRepository;
         protected readonly IDBRepository<UserAnswer> _userAnswerRepository;
+        IEventPublisher _eventPublisher;
 
         /// <summary>
         /// Конструктор
@@ -34,7 +38,8 @@ namespace QZElma.Server.Management.Services
             IDBRepository<Quiz> quizRepository,
             IDBRepository<MultipleChoiceQuestion> questionRepository,
             IDBRepository<User> userRepository,
-            IDBRepository<UserAnswer> userAnswerRepository)
+            IDBRepository<UserAnswer> userAnswerRepository,
+            IEventPublisher eventPublisher)
         {
             _roomRepository = roomRepository;
             this.configuration = configuration;
@@ -42,6 +47,7 @@ namespace QZElma.Server.Management.Services
             _questionRepository = questionRepository;
             _userRepository = userRepository;
             _userAnswerRepository = userAnswerRepository;
+            _eventPublisher = eventPublisher;
         }
 
         /// <summary>
@@ -95,6 +101,12 @@ namespace QZElma.Server.Management.Services
         [EventSubscribtion(typeof(EventQuizStarted))]
         public void StartQuiz(EventQuizStarted @event)
         {
+            SendNextQuestion(@event.RoomId);
+
+            // устанавливаем метод обратного вызова
+            var tm = new TimerCallback(SendNextQuestion);
+            // создаем таймер
+            var timer = new Timer(tm, @event.RoomId, 0, 30000);
         }
 
         /// <summary>
@@ -119,13 +131,45 @@ namespace QZElma.Server.Management.Services
             var questions = _questionRepository.GetList<DMMultipleChoiceQuestionOptionIds>(x => x.OptionIds.Contains(@event.AnswerOptionId));
             var question = questions.FirstOrDefault();
 
-            _userAnswerRepository.Create( new DMUserAnswer() {
+            _userAnswerRepository.Create(new DMUserAnswer() {
                 Id = Guid.NewGuid(),
                 UserId = userId,
                 RoomId = room.Id,
                 QuestionId = question.Id,
                 AnswerOptionId = @event.AnswerOptionId
             });
+        }
+
+        private void SendNextQuestion(object obj)
+        {
+            var roomId = (Guid)obj;
+
+            var room = _roomRepository.Get<DMRoom>(roomId);
+
+            if (room.Quiz.Questions.Count() < room.Quiz.CurrentQuestion)
+            {
+                room.Quiz.CurrentQuestion += 1;
+                _roomRepository.Update(room);
+
+                var count = 0;
+                var questions = room.Quiz.Questions;
+                foreach (var question in questions)
+                {
+                    if (count == room.Quiz.CurrentQuestion)
+                    {
+                        _eventPublisher.Publish(new EventSendNextQuestion()
+                        {
+                            UserChatIds = room.Users.Select(x => x.ChatId),
+                            Question = question
+                        });
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                //TODO end quiz
+            }
         }
 
         private Guid GetOrCreateUserId(long userChatId, string userName)

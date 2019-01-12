@@ -22,5 +22,10 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities.Interfaces
         /// Вопросы
         /// </summary>
         IEnumerable<DMMultipleChoiceQuestion> Questions { get; set; }
+
+        /// <summary>
+        /// Текущий вопрос
+        /// </summary>
+        int CurrentQuestion { get; set; }
     }
 }

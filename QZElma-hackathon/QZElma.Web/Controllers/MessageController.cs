@@ -73,9 +73,10 @@ namespace QZElma.Web.Controllers
                 Text = "LOLKEK"
             };
 
-            chatBot.SendQuestion(new List<int>() {
-                459352140
-            }, question);
+            //Test
+            //chatBot.SendQuestion(new List<int>() {
+            //    459352140
+            //}, question);
 
             return Ok();
         }
