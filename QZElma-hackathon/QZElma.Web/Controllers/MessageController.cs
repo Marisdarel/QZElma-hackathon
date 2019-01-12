@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using QZElma.Server.Management.EventPublishers.Interfaces;
 using QZElma.Server.Models.Database.EventModels.Events;
+using QZElma.Server.Models.DatabaseModels.DMEntities;
 using Telegram.Bot.Types;
 
 namespace QZElma.Web.Controllers
@@ -41,9 +42,40 @@ namespace QZElma.Web.Controllers
 
         public IActionResult Test()
         {
+            var right = Guid.NewGuid();
+            var question = new DMMultipleChoiceQuestion()
+            {
+                Id = Guid.Empty,
+                Options = new List<DMAnswerOption>()
+                {
+                    new DMAnswerOption()
+                    {
+                        Id = right,
+                        Text = "1"
+                    },
+                     new DMAnswerOption()
+                    {
+                        Id = Guid.NewGuid(),
+                        Text = "2"
+                    },
+                      new DMAnswerOption()
+                    {
+                        Id = Guid.NewGuid(),
+                        Text = "М3"
+                    },
+                       new DMAnswerOption()
+                    {
+                        Id = Guid.NewGuid(),
+                        Text = "4"
+                    },
+                },
+                RightAnswerId = right,
+                Text = "LOLKEK"
+            };
+
             chatBot.SendQuestion(new List<int>() {
                 459352140
-            }, null);
+            }, question);
 
             return Ok();
         }

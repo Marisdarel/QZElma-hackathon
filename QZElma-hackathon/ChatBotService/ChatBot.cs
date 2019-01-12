@@ -48,40 +48,8 @@ namespace ChatBotService
 
         public async void SendQuestion(List<int> userList, DMMultipleChoiceQuestion question)
         {
-            var right = Guid.NewGuid();
-            question = new DMMultipleChoiceQuestion()
-            {
-                Id = Guid.Empty,
-                Options = new List<DMAnswerOption>()
-                {
-                    new DMAnswerOption()
-                    {
-                        Id = right,
-                        Text = "1"
-                    },
-                     new DMAnswerOption()
-                    {
-                        Id = Guid.NewGuid(),
-                        Text = "2"
-                    },
-                      new DMAnswerOption()
-                    {
-                        Id = Guid.NewGuid(),
-                        Text = "М3"
-                    },
-                       new DMAnswerOption()
-                    {
-                        Id = Guid.NewGuid(),
-                        Text = "4"
-                    },
-                },
-                RightAnswerId = right,
-                Text = "LOLKEK"
-            };
-
             var keyboard = new ReplyKeyboardMarkup();
 
-            
             var rows = new List<InlineKeyboardButton[]>();
             var cols = new List<InlineKeyboardButton>();
 

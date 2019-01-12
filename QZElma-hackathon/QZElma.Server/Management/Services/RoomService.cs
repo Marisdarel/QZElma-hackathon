@@ -107,7 +107,7 @@ namespace QZElma.Server.Management.Services
 
             // проверка на существование ответа
             var userAnswer = _userAnswerRepository.GetList<DMUserAnswer>(x => x.AnswerOptionId == @event.AnswerOptionId);
-            if (userAnswer.Count() == 0)
+            if (userAnswer.Count() != 0)
             {
                 return;
             }
