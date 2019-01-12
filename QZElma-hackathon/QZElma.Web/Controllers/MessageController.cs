@@ -7,6 +7,8 @@ using ChatBotService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using QZElma.Server.Management.EventPublishers.Interfaces;
+using QZElma.Server.Models.Database.EventModels.Events;
 using Telegram.Bot.Types;
 
 namespace QZElma.Web.Controllers
@@ -15,14 +17,26 @@ namespace QZElma.Web.Controllers
     {
         private readonly ChatBot chatBot;
         private readonly ILogger<MessageController> logger;
+        private readonly IEventPublisher publisher;
         private readonly ChatBotListener listener;
 
-        public MessageController(ChatBot chatBot, ILogger<MessageController> logger, ChatBotListener listener)
+        public MessageController(ChatBot chatBot, ILogger<MessageController> logger, IEventPublisher publisher)
         {
             this.chatBot = chatBot;
             this.logger = logger;
-            this.listener = listener;
+            this.publisher = publisher;
         }
 
+        public IActionResult StartRoom()
+        {
+            var startEvent = new EventQuizStarted()
+            {
+                RoomId = Guid.Empty
+            };
+
+            publisher.Publish(startEvent);
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

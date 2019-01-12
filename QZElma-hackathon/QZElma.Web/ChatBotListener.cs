@@ -15,7 +15,7 @@ namespace QZElma.Web
         private readonly ChatBot bot;
         private readonly ILogger<ChatBotListener> logger;
         private Timer _timer;
-        int offset = 0;
+        private int offset = 911858334;
         
 
         public ChatBotListener(ChatBot bot, ILogger<ChatBotListener> logger)
@@ -66,7 +66,7 @@ namespace QZElma.Web
         public Task StartAsync(CancellationToken cancellationToken)
         {
             logger.LogInformation("Лиссенер старнтанул");
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(100000));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
 
             return Task.CompletedTask;
         }

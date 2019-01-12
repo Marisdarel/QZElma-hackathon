@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace ChatBotService
 {
-    [ChatBotServiceAtt]
+    [QZElma.Server.Models.Attributes.ChatBotService]
     public class ChatBot
     {
         private readonly string token;
@@ -59,8 +59,8 @@ namespace ChatBotService
                 rows.Add(cols.ToArray());
                 cols = new List<KeyboardButton>();
             }
-            rkm.Keyboard = rows.ToArray();
 
+            rkm.Keyboard = rows.ToArray();
 
             //await client.SendTextMessageAsync(
             //    message.Chat.Id,
