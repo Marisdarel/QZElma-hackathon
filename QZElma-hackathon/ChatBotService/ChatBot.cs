@@ -105,6 +105,11 @@ namespace ChatBotService
             
         }
 
+        public async void SendMessage(string message, int chatId)
+        {
+            await client.SendTextMessageAsync(chatId, message);
+        }
+
         public async Task<TelegramBotClient> Get()
         {
             if(client != null)

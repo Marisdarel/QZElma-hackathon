@@ -1,4 +1,5 @@
-﻿using QZElma.Server.Management.DBRepositories.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
+using QZElma.Server.Management.DBRepositories.Interfaces;
 using QZElma.Server.Management.Services.Interfaces;
 using QZElma.Server.Models.Attributes;
 using QZElma.Server.Models.Database.DBEntities;
@@ -18,6 +19,7 @@ namespace QZElma.Server.Management.Services
         IRoomService
     {
         protected readonly IDBRepository<Room> _roomRepository;
+        private readonly IConfiguration configuration;
         protected readonly IDBRepository<Quiz> _quizRepository;
         protected readonly IDBRepository<MultipleChoiceQuestion> _questionRepository;
         protected readonly IDBRepository<User> _userRepository;
@@ -28,12 +30,14 @@ namespace QZElma.Server.Management.Services
         /// </summary>
         public RoomService(
             IDBRepository<Room> roomRepository,
+            IConfiguration configuration,
             IDBRepository<Quiz> quizRepository,
             IDBRepository<MultipleChoiceQuestion> questionRepository,
             IDBRepository<User> userRepository,
             IDBRepository<UserAnswer> userAnswerRepository)
         {
             _roomRepository = roomRepository;
+            this.configuration = configuration;
             _quizRepository = quizRepository;
             _questionRepository = questionRepository;
             _userRepository = userRepository;
@@ -77,7 +81,9 @@ namespace QZElma.Server.Management.Services
 
             //TODO проверка на принадлежность только одной комнате??
 
-            var roomUserIds = _roomRepository.Get<DMRoomUserIds>(@event.RoomId);
+            var roomId = configuration.GetSection("DefaultRoomId").Value;
+
+            var roomUserIds = _roomRepository.Get<DMRoomUserIds>(Guid.Parse(roomId));
             roomUserIds.UserIds.Add(userId);
 
             _roomRepository.Update(roomUserIds);
