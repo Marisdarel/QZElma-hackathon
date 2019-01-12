@@ -1,6 +1,22 @@
-﻿namespace QZElma.Server.Models.Database.DBEntities.Interfaces
+﻿using System.Collections.Generic;
+
+
+namespace QZElma.Server.Models.Database.DBEntities.Interfaces
 {
-    public interface IQuiz
+    /// <summary>
+    /// Викторина
+    /// </summary>
+    public interface IQuiz :
+        IDBIdEntity
     {
+        /// <summary>
+        /// Название
+        /// </summary>
+        string Name { get; set; }
+
+        /// <summary>
+        /// Вопросы
+        /// </summary>
+        ICollection<MultipleChoiceQuestion> Questions { get; set; }
     }
 }

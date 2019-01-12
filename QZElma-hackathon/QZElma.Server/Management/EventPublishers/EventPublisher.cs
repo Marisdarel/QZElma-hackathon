@@ -36,7 +36,7 @@ namespace QZElma.Server.Management.EventPublishers
         /// </summary>
         /// <param name="someEvents">События</param>
         /// <returns></returns>
-        public void Publish(IEnumerable<IEvent> someEvents)
+        public void Publish(ICollection<IEvent> someEvents)
         {
             foreach (var someEvent in someEvents)
             {

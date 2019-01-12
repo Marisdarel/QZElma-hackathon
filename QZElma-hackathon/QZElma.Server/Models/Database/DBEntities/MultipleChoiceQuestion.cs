@@ -6,9 +6,10 @@ using System.Collections.Generic;
 namespace QZElma.Server.Models.Database.DBEntities
 {
     /// <summary>
-    /// Комната проведения викторины
+    /// Вопрос с несколькими вариантами ответа
     /// </summary>
-    public class Room : IRoom
+    public class MultipleChoiceQuestion :
+        IMultipleChoiceQuestion
     {
         /// <summary>
         /// Идентификатор
@@ -16,18 +17,18 @@ namespace QZElma.Server.Models.Database.DBEntities
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Название
+        /// Текст вопроса
         /// </summary>
-        public string Name { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
-        /// Викторина
+        /// Варианты ответа
         /// </summary>
-        public Quiz Quiz { get; set; }
+        public ICollection<AnswerOption> Options { get; set; }
 
         /// <summary>
-        /// Пользователи
+        /// Правильный вариант ответа
         /// </summary>
-        public ICollection<User> Users { get; set; }
+        public Guid RightAnswerId { get; set; }
     }
 }

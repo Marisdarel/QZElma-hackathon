@@ -5,9 +5,10 @@ using System;
 namespace QZElma.Server.Models.Database.DBEntities
 {
     /// <summary>
-    /// Пользователь
+    /// Варианта ответа
     /// </summary>
-    public class User : IUser
+    public class AnswerOption :
+        IAnswerOption
     {
         /// <summary>
         /// Идентификатор
@@ -15,13 +16,8 @@ namespace QZElma.Server.Models.Database.DBEntities
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Имя
+        /// Текст вопроса
         /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Идентификатор в чате
-        /// </summary>
-        public Guid ChatId { get; set; }
+        public string Text { get; set; }
     }
 }
