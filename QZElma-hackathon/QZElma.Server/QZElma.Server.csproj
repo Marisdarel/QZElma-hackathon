@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Management\DBRepositories\" />
     <Folder Include="Management\Helpers\" />
   </ItemGroup>
 
