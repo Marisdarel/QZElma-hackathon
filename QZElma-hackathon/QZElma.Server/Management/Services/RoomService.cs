@@ -21,6 +21,7 @@ namespace QZElma.Server.Management.Services
         protected readonly IDBRepository<Quiz> _quizRepository;
         protected readonly IDBRepository<MultipleChoiceQuestion> _questionRepository;
         protected readonly IDBRepository<User> _userRepository;
+        protected readonly IDBRepository<UserAnswer> _userAnswerRepository;
 
         /// <summary>
         /// Конструктор
@@ -29,12 +30,14 @@ namespace QZElma.Server.Management.Services
             IDBRepository<Room> roomRepository,
             IDBRepository<Quiz> quizRepository,
             IDBRepository<MultipleChoiceQuestion> questionRepository,
-            IDBRepository<User> userRepository)
+            IDBRepository<User> userRepository,
+            IDBRepository<UserAnswer> userAnswerRepository)
         {
             _roomRepository = roomRepository;
             _quizRepository = quizRepository;
             _questionRepository = questionRepository;
             _userRepository = userRepository;
+            _userAnswerRepository = userAnswerRepository;
         }
 
         /// <summary>
@@ -72,6 +75,8 @@ namespace QZElma.Server.Management.Services
         {
             var userId = GetOrCreateUserId(@event.UserChatId, @event.UserName);
 
+            //TODO проверка на принадлежность только одной комнате??
+
             var roomUserIds = _roomRepository.Get<DMRoomUserIds>(@event.RoomId);
             roomUserIds.UserIds.Add(userId);
 
@@ -92,6 +97,29 @@ namespace QZElma.Server.Management.Services
         [EventSubscribtion(typeof(EventUserAnsweredQuestion))]
         public void ReceiveUserAnswer(EventUserAnsweredQuestion @event)
         {
+            var userId = GetOrCreateUserId(@event.UserChatId, @event.UserName);
+
+            // проверка на существование ответа
+            var userAnswer = _userAnswerRepository.GetList<DMUserAnswer>(x => x.AnswerOptionId == @event.AnswerOptionId);
+            if (userAnswer.Count() == 0)
+            {
+                return;
+            }
+
+            // одна комната для пользователя
+            var rooms = _roomRepository.GetList<DMRoomUserIds>(x => x.UserIds.Contains(userId));
+            var room = rooms.FirstOrDefault();
+
+            var questions = _questionRepository.GetList<DMMultipleChoiceQuestionOptionIds>(x => x.OptionIds.Contains(@event.AnswerOptionId));
+            var question = questions.FirstOrDefault();
+
+            _userAnswerRepository.Create( new DMUserAnswer() {
+                Id = Guid.NewGuid(),
+                UserId = userId,
+                RoomId = room.Id,
+                QuestionId = question.Id,
+                AnswerOptionId = @event.AnswerOptionId
+            });
         }
 
         private Guid GetOrCreateUserId(long userChatId, string userName)

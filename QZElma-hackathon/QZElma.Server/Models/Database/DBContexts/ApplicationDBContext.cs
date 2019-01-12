@@ -24,6 +24,8 @@ namespace QZElma.Server.Models.Database.DBContexts
 
         public DbSet<MultipleChoiceQuestion> MultipleChoiceQuestions { get; set; }
 
+        public DbSet<UserAnswer> UserAnswers { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

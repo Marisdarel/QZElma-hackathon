@@ -16,8 +16,13 @@ namespace QZElma.Server.Models.Database.EventModels.Events
         public long UserChatId { get; set; }
 
         /// <summary>
+        /// Имя пользователя в чате
+        /// </summary>
+        public string UserName { get; set; }
+
+        /// <summary>
         /// Идентификатор ответа
         /// </summary>
-        public string AnswerId { get; set; }
+        public Guid AnswerOptionId { get; set; }
     }
 }
