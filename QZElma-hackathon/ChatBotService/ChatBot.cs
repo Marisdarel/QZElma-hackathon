@@ -1,4 +1,7 @@
 ﻿using ChatBotService.Commands;
+using Microsoft.Extensions.Configuration;
+using QZElma.Server.ConfigurationOptions;
+using QZElma.Server.Models.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,6 +9,7 @@ using Telegram.Bot;
 
 namespace ChatBotService
 {
+    [ChatBotServiceAtt]
     public class ChatBot
     {
         private readonly string token;
@@ -13,10 +17,14 @@ namespace ChatBotService
         private TelegramBotClient client;
         private readonly List<Command> commandList;
 
-        public ChatBot(string token, string hookUrl)
+        public ChatBot(IConfiguration configuration)
         {
-            this.token = token;
-            this.hookUrl = hookUrl;
+            var botSettings = new BotSettings();
+            configuration.GetSection("BotSettings").Bind(botSettings);
+
+            this.token = botSettings.Token;
+            this.hookUrl = botSettings.HoockUrl;
+
             this.commandList = new List<Command>()
             {
                 new HelloComand()
