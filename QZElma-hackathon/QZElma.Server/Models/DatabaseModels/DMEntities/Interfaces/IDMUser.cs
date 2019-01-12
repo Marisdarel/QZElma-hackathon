@@ -21,6 +21,6 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities.Interfaces
         /// <summary>
         /// Идентификатор в чате
         /// </summary>
-        Guid ChatId { get; set; }
+        long ChatId { get; set; }
     }
 }

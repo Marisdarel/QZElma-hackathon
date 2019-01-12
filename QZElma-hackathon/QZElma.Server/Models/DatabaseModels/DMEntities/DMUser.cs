@@ -29,7 +29,7 @@ namespace QZElma.Server.Models.DatabaseModels.DMEntities
         /// <summary>
         /// Идентификатор в чате
         /// </summary>
-        public Guid ChatId { get; set; }
+        public long ChatId { get; set; }
 
 
         /// <summary>

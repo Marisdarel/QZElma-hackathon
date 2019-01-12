@@ -23,7 +23,7 @@ namespace QZElma.Server.Models.Database.EventModels.Events
         /// <summary>
         /// Идентификатор пользователя в чате, создавшего комнату
         /// </summary>
-        public Guid UserChatId { get; set; }
+        public long UserChatId { get; set; }
 
         /// <summary>
         /// Имя пользователя в чате, создавшего комнату
