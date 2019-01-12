@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using QZElma_hackathon.Models;
+using QZElma.Web.Models;
 
-namespace QZElma_hackathon.Controllers
+namespace QZElma.Web.Controllers
 {
     public class HomeController : Controller
     {

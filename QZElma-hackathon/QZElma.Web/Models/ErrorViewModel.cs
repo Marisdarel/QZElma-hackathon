@@ -1,6 +1,6 @@
 using System;
 
-namespace QZElma_hackathon.Models
+namespace QZElma.Web.Models
 {
     public class ErrorViewModel
     {
