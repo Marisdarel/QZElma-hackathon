@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using ChatBotService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -59,8 +60,12 @@ namespace QZElma.Web
                    .WithTransientLifetime()
                 .AddClasses(classes => classes.WithAttribute<ChatBotServiceAtt>())
                    .AsSelf()
-                   .WithSingletonLifetime()
+                   .WithTransientLifetime()
             );
+
+            services.AddHostedService<ChatBotListener>();
+
+            services.AddSingleton<ChatBot>();
 
             services.AddCap(x =>
             {

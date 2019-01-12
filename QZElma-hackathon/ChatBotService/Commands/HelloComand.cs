@@ -15,7 +15,7 @@ namespace ChatBotService.Commands
             var chatId = message.Chat.Id;
             var messageId = message.MessageId;
             
-            await client.SendTextMessageAsync(0, "Hello", replyToMessageId: messageId);
+            await client.SendTextMessageAsync(chatId, "Hello", replyToMessageId: messageId);
         }
     }
 }

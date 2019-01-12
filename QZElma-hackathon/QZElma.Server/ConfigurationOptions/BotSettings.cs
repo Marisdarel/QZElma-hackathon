@@ -9,5 +9,9 @@ namespace QZElma.Server.ConfigurationOptions
         public string Type { get; set; }
         public string Token { get; set; }
         public string HoockUrl {get;set;}
+        public string Socks5Host { get; set; }
+        public int Socks5Port { get; set; }
+        public string Socks5User { get; set; }
+        public string Socks5Pass { get; set; }
     }
 }

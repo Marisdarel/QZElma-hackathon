@@ -1,39 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using ChatBotService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Telegram.Bot.Types;
 
 namespace QZElma.Web.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class MessageController : ControllerBase
     {
         private readonly ChatBot chatBot;
+        private readonly ILogger<MessageController> logger;
+        private readonly ChatBotListener listener;
 
-        public MessageController(ChatBot chatBot)
+        public MessageController(ChatBot chatBot, ILogger<MessageController> logger, ChatBotListener listener)
         {
             this.chatBot = chatBot;
-        }
-
-        public async Task<OkResult> Update(Update update)
-        {
-            var commands = chatBot.GetCommandList();
-            var message = update.Message;
-            var client = await chatBot.Get();
-
-            var command = commands.FirstOrDefault(x => x.Contains(update.Message.Text));
-
-            if(command != null)
-            {
-                command.Execute(message, client);
-            }
-
-            return Ok();
+            this.logger = logger;
+            this.listener = listener;
         }
 
     }
