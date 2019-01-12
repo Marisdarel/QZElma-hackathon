@@ -45,31 +45,31 @@ namespace QZElma.Web.Controllers
             var right = Guid.NewGuid();
             var question = new DMMultipleChoiceQuestion()
             {
-                Id = Guid.Empty,
+                Id = Guid.Parse("2b2c8ad8-f1f7-425c-a9fb-3ef0f54f247b"),
                 Options = new List<DMAnswerOption>()
                 {
                     new DMAnswerOption()
                     {
-                        Id = right,
+                        Id = Guid.Parse("c4730179-a900-4192-bf94-a82b3f78cb36"),
                         Text = "1"
                     },
                      new DMAnswerOption()
                     {
-                        Id = Guid.NewGuid(),
+                        Id = Guid.Parse("08593bc9-7287-4e1e-b076-15fda9310755"),
                         Text = "2"
                     },
                       new DMAnswerOption()
                     {
-                        Id = Guid.NewGuid(),
+                        Id = Guid.Parse("27b22573-931f-4cf5-b132-55624a799437"),
                         Text = "М3"
                     },
                        new DMAnswerOption()
                     {
-                        Id = Guid.NewGuid(),
+                        Id = Guid.Parse("f11200cb-4be7-4de3-8c83-a9c38da546f0"),
                         Text = "4"
                     },
                 },
-                RightAnswerId = right,
+                RightAnswerId = Guid.Parse("08593bc9-7287-4e1e-b076-15fda9310755"),
                 Text = "LOLKEK"
             };
 
