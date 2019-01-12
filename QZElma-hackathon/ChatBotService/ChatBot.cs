@@ -2,16 +2,13 @@
 using Microsoft.Extensions.Configuration;
 using MihaZupan;
 using QZElma.Server.ConfigurationOptions;
-using QZElma.Server.Models.Attributes;
 using QZElma.Server.Models.DatabaseModels.DMEntities;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot;
-using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
-using LinqKit;
-using System.Linq;
+
 
 namespace ChatBotService
 {
