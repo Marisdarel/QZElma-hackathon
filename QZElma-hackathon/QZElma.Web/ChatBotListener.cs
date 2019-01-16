@@ -42,6 +42,7 @@ namespace QZElma.Web
 
                 foreach (var update in updates) // Перебираем все обновления
                 {
+                    offset = update.Id + 1;
                     var commands = bot.GetCommandList();
                     var message = update.Message;
                     var callback = update.CallbackQuery;
@@ -58,20 +59,18 @@ namespace QZElma.Web
                     }
                     else if(callback != null)
                     {
-                        var command = commands.Where(x => x.Name == "Answer").FirstOrDefault();
-                        if (command != null)
-                        {
+                        
                             var answerEvent = new EventUserAnsweredQuestion() {
                                 UserChatId = callback.From.Id,
                                 AnswerOptionId = new Guid(callback.Data)
                             };
                             publisher.Publish(answerEvent);
 
-                            await client.SendTextMessageAsync(callback.From.Id, String.Format("Ответ {0} сохранен", callback.Message.Text));
-                        }
+                            await client.SendTextMessageAsync(callback.From.Id, String.Format("Ответ сохранен", callback.Message.Text));
+                        
                     }
 
-                    offset = update.Id + 1;
+                   
                 }
 
 

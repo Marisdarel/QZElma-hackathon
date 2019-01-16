@@ -32,7 +32,7 @@ namespace QZElma.Web.Controllers
         {
             var startEvent = new EventQuizStarted()
             {
-                RoomId = Guid.Empty
+                RoomId = Guid.Parse("4d2376a6-e3cd-452b-8ad4-f8457db3f0cd")
             };
 
             publisher.Publish(startEvent);

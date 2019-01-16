@@ -46,7 +46,7 @@ namespace ChatBotService
             {
                 new HelloComand(),
                 new UserEntireToRoom(publisher),
-                new AnswerCommand(publisher)
+                new StartCommand(publisher)
             };
         }
 

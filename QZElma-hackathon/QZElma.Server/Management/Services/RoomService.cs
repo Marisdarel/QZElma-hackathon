@@ -29,6 +29,8 @@ namespace QZElma.Server.Management.Services
         protected readonly IDBRepository<UserAnswer> _userAnswerRepository;
         IEventPublisher _eventPublisher;
 
+        static Timer timer;
+
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -101,12 +103,10 @@ namespace QZElma.Server.Management.Services
         [EventSubscribtion(typeof(EventQuizStarted))]
         public void StartQuiz(EventQuizStarted @event)
         {
-            SendNextQuestion(@event.RoomId);
-
             // устанавливаем метод обратного вызова
             var tm = new TimerCallback(SendNextQuestion);
             // создаем таймер
-            var timer = new Timer(tm, @event.RoomId, 0, 30000);
+            timer = new Timer(tm, @event.RoomId, 0, 10000);
         }
 
         /// <summary>
@@ -128,8 +128,14 @@ namespace QZElma.Server.Management.Services
             var rooms = _roomRepository.GetList<DMRoomUserIds>(x => x.UserIds.Contains(userId));
             var room = rooms.FirstOrDefault();
 
+            if (room == null)
+                return;
+
             var questions = _questionRepository.GetList<DMMultipleChoiceQuestionOptionIds>(x => x.OptionIds.Contains(@event.AnswerOptionId));
             var question = questions.FirstOrDefault();
+
+            if (question == null)
+                return;
 
             _userAnswerRepository.Create(new DMUserAnswer() {
                 Id = Guid.NewGuid(),
@@ -145,17 +151,20 @@ namespace QZElma.Server.Management.Services
             var roomId = (Guid)obj;
 
             var room = _roomRepository.Get<DMRoom>(roomId);
+            var quiz = _quizRepository.Get<DMQuizCurrentQuestion>(room.Quiz.Id);
 
-            if (room.Quiz.Questions.Count() < room.Quiz.CurrentQuestion)
+            quiz.CurrentQuestion += 1;
+
+            if (room.Quiz.Questions.Count() > room.Quiz.CurrentQuestion)
             {
-                room.Quiz.CurrentQuestion += 1;
-                _roomRepository.Update(room);
+                
+                _quizRepository.Update(quiz);
 
                 var count = 0;
                 var questions = room.Quiz.Questions;
                 foreach (var question in questions)
                 {
-                    if (count == room.Quiz.CurrentQuestion)
+                    if (count++ == room.Quiz.CurrentQuestion)
                     {
                         _eventPublisher.Publish(new EventSendNextQuestion()
                         {
@@ -168,7 +177,7 @@ namespace QZElma.Server.Management.Services
             }
             else
             {
-                //TODO end quiz
+
             }
         }
 

@@ -8,23 +8,22 @@ using Telegram.Bot.Types;
 
 namespace ChatBotService.Commands
 {
-    public class AnswerCommand : Command
+    public class StartCommand : Command
     {
         private readonly IEventPublisher publish;
 
-        public AnswerCommand(IEventPublisher publish)
+        public StartCommand(IEventPublisher publish)
         {
             this.publish = publish;
         }
 
-        public override string Name => "Answer";
+        public override string Name => "startquiz";
 
         public override void Execute(Message message, TelegramBotClient client)
         {
-            var ansEvent = new EventUserAnsweredQuestion()
+            var ansEvent = new EventQuizStarted()
             {
-                UserChatId = message.Chat.Id,
-                AnswerOptionId = new Guid(message.Text)
+                RoomId = Guid.Parse("4d2376a6-e3cd-452b-8ad4-f8457db3f0cd")
             };
 
             publish.Publish(ansEvent);
